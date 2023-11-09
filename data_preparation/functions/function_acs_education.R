@@ -12,10 +12,10 @@
 acs_subset_calculate_education <- 
   function(geography = "zcta", year, state){
     # read in raw data
-    df <- 
-      get_acs(geography = geography,
-              year = year,
-              state = state,
+    df_edu_2018 <- 
+      get_acs(geography = "zcta",
+              year = 2018,
+              state = "California",
               survey = "acs5",
               summary_var = "B15003_001", # Estimate!!Total:
               variables = c(
@@ -54,7 +54,7 @@ acs_subset_calculate_education <-
       mutate(zip_code = str_sub(name, start = -5, end = -1))
     # calculate percentage
     df_percent <- 
-      df %>% 
+      df_edu %>% 
       group_by(zip_code, education) %>% 
       summarize(estimate = sum(estimate),
                 moe = sum(moe),
