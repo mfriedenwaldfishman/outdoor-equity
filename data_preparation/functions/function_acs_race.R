@@ -11,10 +11,10 @@
 #' @examples
 acs_subset_calculate_race <- function(geography = "zcta", year, state){
     # read in raw data
-    df <- 
-      get_acs(geography = geography,
-              year = year,
-              state = state,
+    df_race <- 
+      get_acs(geography = "zcta",
+              year = 2018,
+              state = "California",
               survey = "acs5",
               summary_var = "B03002_001", #Estimate!!Total: 
               variables = c(
@@ -33,7 +33,7 @@ acs_subset_calculate_race <- function(geography = "zcta", year, state){
       mutate(zip_code = str_sub(name, start = -5, end = -1))
     # calculate percentage
     df_percent <- 
-      df %>% 
+      df_race %>% 
       group_by(zip_code, race) %>% 
       summarise(estimate = sum(estimate),
                 moe = sum(moe),
