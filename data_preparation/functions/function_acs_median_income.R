@@ -11,10 +11,10 @@
 #'
 #' @examples
 acs_subset_calculate_median_income <- function(geography = "zcta", year, state){
-    df <- 
-      get_acs(geography = geography,
-              year = year,
-              state = state,
+    df_median_income <- 
+      get_acs(geography = "zcta",
+              year = 2018,
+              state = "California",
               survey = "acs5",
               variables = c(
                 median_income = "B19013_001" # Estimate!!Median household income in the past 12 months (in 2019 inflation-adjusted dollars)
@@ -32,4 +32,4 @@ acs_subset_calculate_median_income <- function(geography = "zcta", year, state){
       assign(x = paste0("data_acs_", year, "_median_income_", state), 
              data.frame(df), envir = .GlobalEnv)
     }
-  }
+}
