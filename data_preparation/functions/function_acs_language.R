@@ -10,10 +10,10 @@
 #' @examples
 acs_subset_calculate_language <- function(geography = "zcta", state){
     # read in raw data
-    df <- 
-      get_acs(geography = geography,
-              year = 2015, # closest year to 2018 that doesn't pull all NA values
-              state = state,
+    df_lang <- 
+      get_acs(geography = "zcta",
+              year = 2018, # closest year to 2018 that doesn't pull all NA values
+              state = "California",
               survey = "acs5",
               summary_var = "B16001_001", # Estimate!!Total:
               variables = c(
@@ -25,7 +25,7 @@ acs_subset_calculate_language <- function(geography = "zcta", state){
       mutate(zip_code = str_sub(name, start = -5, end = -1))
     # calculate percentage
     df_percent <- 
-      df %>% 
+      df_lang %>% 
       group_by(zip_code, language) %>% 
       summarize(estimate = sum(estimate),
                 moe = sum(moe),
@@ -50,4 +50,4 @@ acs_subset_calculate_language <- function(geography = "zcta", state){
       assign(paste0("data_acs_", "2020", "_language_percent_", state), 
              data.frame(df_percent_wider), envir = .GlobalEnv)
     }
-  }
+}
